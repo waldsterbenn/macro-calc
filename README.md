@@ -5,7 +5,7 @@ Add your food intake and calculate your macro destribution.
 
 ## Screenshots
 
-![Screenshot 1](./Macro-calc Screenshot 2024-06-10 132457.png, "Screenshot 1")
+![Screenshot](<Macro-calc Screenshot 2024-06-10 132457.png>)
 
 ## Features
 
@@ -17,6 +17,20 @@ Add your food intake and calculate your macro destribution.
 ## Data
 
 Change `public/static_products.json` file to you're own food macro data.
+
+Example. Macros data is always pr 100g.
+
+```
+    {
+        "category": "ULC",
+        "name": "Bacon",
+        "macrosPrHundred": {
+            "fat": 0.28,
+            "protein": 0.14,
+            "carbs": 0
+        }
+    }
+```
 
 ## Technologies
 
