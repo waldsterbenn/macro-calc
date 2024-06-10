@@ -1,0 +1,250 @@
+[
+    {
+        "category": "ULC",
+        "name": "Bøf hk",
+        "macrosPrHundred": {
+            "fat": 0.04,
+            "protein": 0.2,
+            "carbs": 0
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Bacon",
+        "macrosPrHundred": {
+            "fat": 0.28,
+            "protein": 0.14,
+            "carbs": 0
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Æg",
+        "macrosPrHundred": {
+            "fat": 0.099,
+            "protein": 0.123,
+            "carbs": 0.0011
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Kylling",
+        "macrosPrHundred": {
+            "fat": 0.02,
+            "protein": 0.24,
+            "carbs": 0
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Caesin Pulver 83%",
+        "macrosPrHundred": {
+            "fat": 0.019,
+            "protein": 0.83,
+            "carbs": 0.034
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Protein Pulver 75%",
+        "macrosPrHundred": {
+            "fat": 0.015,
+            "protein": 0.75,
+            "carbs": 0
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Hytteost 1.5%",
+        "macrosPrHundred": {
+            "fat": 0.015,
+            "protein": 0.12,
+            "carbs": 0.02
+        }
+    },
+	{
+        "category": "ULC",
+        "name": "Hytteost 4%",
+        "macrosPrHundred": {
+            "fat": 0.04,
+            "protein": 0.12,
+            "carbs": 0.023
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Ost",
+        "macrosPrHundred": {
+            "fat": 0.33,
+            "protein": 0.25,
+            "carbs": 0.013
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Greek 10%",
+        "macrosPrHundred": {
+            "fat": 0.1,
+            "protein": 0.06,
+            "carbs": 0.045
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Skyr 0,2%",
+        "macrosPrHundred": {
+            "fat": 0.02,
+            "protein": 0.11,
+            "carbs": 0.04
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Fløde 38%",
+        "macrosPrHundred": {
+            "fat": 0.38,
+            "protein": 0.02,
+            "carbs": 0.032
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Para nød",
+        "macrosPrHundred": {
+            "fat": 0.674,
+            "protein": 0.147,
+            "carbs": 0.036
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Choko 80%",
+        "macrosPrHundred": {
+            "fat": 0.48,
+            "protein": 0.08,
+            "carbs": 0.25
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Mandler",
+        "macrosPrHundred": {
+            "fat": 0.152,
+            "protein": 0.074,
+            "carbs": 0.051
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Peanut",
+        "macrosPrHundred": {
+            "fat": 0.57,
+            "protein": 0.26,
+            "carbs": 0.052
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Macedemia",
+        "macrosPrHundred": {
+            "fat": 0.74,
+            "protein": 0.09,
+            "carbs": 0.05
+        }
+    },
+	{
+        "category": "ULC",
+        "name": "Smør",
+        "macrosPrHundred": {
+            "fat": 0.85,
+            "protein": 0.06,
+            "carbs": 0.07
+        }
+    },
+    {
+        "category": "HC",
+        "name": "Pasta",
+        "macrosPrHundred": {
+            "fat": 0.014,
+            "protein": 0.15,
+            "carbs": 0.75
+        }
+    },
+	{
+        "category": "HC",
+        "name": "Ris",
+        "macrosPrHundred": {
+            "fat": 0,
+            "protein": 0.05,
+            "carbs": 0.78
+        }
+    },
+    {
+        "category": "ULC",
+        "name": "Pølse",
+        "macrosPrHundred": {
+            "fat": 0.16,
+            "protein": 0.15,
+            "carbs": 0.05
+        }
+    },
+    {
+        "category": "HC",
+        "name": "Sød Mælk",
+        "macrosPrHundred": {
+            "fat": 0.035,
+            "protein": 0.034,
+            "carbs": 0.046
+        }
+    },
+    {
+        "category": "HC",
+        "name": "Let Mælk",
+        "macrosPrHundred": {
+            "fat": 0.015,
+            "protein": 0.035,
+            "carbs": 0.047
+        }
+    },
+    {
+        "category": "HC",
+        "name": "Ærter",
+        "macrosPrHundred": {
+            "fat": 0.007,
+            "protein": 0.06,
+            "carbs": 0.055
+        }
+    },{
+        "category": "LC",
+        "name": "Hasselnødder",
+        "macrosPrHundred": {
+            "fat": 0.18,
+            "protein": 0.04,
+            "carbs": 0.05
+        }
+    },{
+        "category": "LC",
+        "name": "Mozzerella",
+        "macrosPrHundred": {
+            "fat": 0.19,
+            "protein": 0.18,
+            "carbs": 0.05
+        }
+    },{
+        "category": "HC",
+        "name": "Rugbrød hjemmelavet",
+        "macrosPrHundred": {
+            "fat": 0.08,
+            "protein": 0.08,
+            "carbs": 0.32
+        }
+    },{
+        "category": "HC",
+        "name": "Hvedebrød",
+        "macrosPrHundred": {
+            "fat": 0.04,
+            "protein": 0.10,
+            "carbs": 0.48
+        }
+    }
+]
