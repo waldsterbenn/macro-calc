@@ -1,6 +1,22 @@
 # Macro Calculator
 
+Electron app that runs a hosted react web app locally.
 Add your food intake and calculate your macro destribution.
+
+## Screenshots
+
+![Screenshot 1](./Macro-calc Screenshot 2024-06-10 132457.png, "Screenshot 1")
+
+## Features
+
+- Add food intake.
+- Calculate macro destribution.
+- Delete food intake.
+- Low carb and high carb mode
+
+## Data
+
+Change `public/static_products.json` file to you're own food macro data.
 
 ## Technologies
 
