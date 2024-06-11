@@ -6,6 +6,7 @@ const electron = window.require("electron");
 const consumedStorageKey = "storedConsumedItems";
 const isUlcStorageKey = "isUlc";
 const saveDateStorageKey = "savedDate";
+const lastFocusKey = "focusedTextbox";
 
 /**
  * !!!!!!!!!!!!!!!!!!
@@ -23,7 +24,12 @@ class MacroApp extends React.Component {
     super(props);
 
     let currentDate = new Date();
-    let storedDate = JSON.parse(localStorage.getItem(saveDateStorageKey));
+    let storedDate = JSON.parse(
+      localStorage.getItem(saveDateStorageKey) ??
+        JSON.stringify({
+          savedDate: currentDate,
+        })
+    );
     let savedDate = new Date(storedDate.savedDate);
     if (currentDate > savedDate) {
       localStorage.setItem(
@@ -40,6 +46,40 @@ class MacroApp extends React.Component {
     this.handleGramsChanged = this.handleGramsChanged.bind(this);
     this.onItemAdded = this.handleOnItemAdded.bind(this);
     this.onItemRemoved = this.handleOnItemRemoved.bind(this);
+    this.handleFocusIn = this.handleFocusIn.bind(this);
+    document.addEventListener("focusin", this.handleFocusIn);
+  }
+
+  componentWillUnmount() {
+    // Remove event listeners or clean up resources when the component is unmounted
+    document.removeEventListener("keydown", this.handleKeyDown);
+    document.removeEventListener("focusin", this.handleFocusIn);
+  }
+
+  handleFocusIn(e) {
+    if (e.target.id) localStorage.setItem(lastFocusKey, e.target.id);
+  }
+
+  async componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.consumedItems &&
+      this.state.consumedItems &&
+      JSON.stringify(this.state.consumedItems) !==
+        JSON.stringify(prevState.consumedItems)
+    ) {
+      let items = [];
+      this.state.consumedItems.forEach((item) => {
+        items.push({
+          name: item.props.name,
+          grams: item.props.grams,
+        });
+      });
+
+      const json = JSON.stringify(items);
+      localStorage.setItem(consumedStorageKey, json); // Write to localStorage immediately
+
+      electron.ipcRenderer.send("writeUserFile", [json]); // Send IPC message without waiting for response
+    }
   }
 
   async componentDidMount() {
@@ -61,7 +101,7 @@ class MacroApp extends React.Component {
             products={products}
             onGramsChanged={this.handleGramsChanged}
             onItemRemoved={this.onItemRemoved}
-            autoFocus={false}
+            autoFocus={res.name === localStorage.getItem(lastFocusKey)}
           />
         );
       });
@@ -78,19 +118,6 @@ class MacroApp extends React.Component {
       consumedItems,
       products,
     });
-  }
-
-  saveChange(newList) {
-    let items = [];
-    newList.forEach((item) => {
-      items.push({
-        name: item.props.name,
-        grams: item.props.grams,
-      });
-    });
-
-    const json = JSON.stringify(items);
-    localStorage.setItem(consumedStorageKey, json);
   }
 
   handleOnItemAdded(item) {
@@ -112,12 +139,11 @@ class MacroApp extends React.Component {
         autoFocus={true}
       />
     );
-
+    localStorage.setItem(lastFocusKey, item.name);
     let newList = [...this.state.consumedItems, sd];
     this.setState({
       consumedItems: newList,
     });
-    this.saveChange(newList);
   }
 
   handleOnItemRemoved(productName) {
@@ -125,7 +151,6 @@ class MacroApp extends React.Component {
     let index = rows.findIndex((x) => x.props.name === productName);
     rows.splice(index, 1);
     this.setState({ consumedItems: rows });
-    this.saveChange(rows);
   }
 
   handleGramsChanged(productName, grams) {
@@ -158,8 +183,6 @@ class MacroApp extends React.Component {
       ),
       totalCarbs: calculateTotal("carbs", updatedItems, this.state.products),
     });
-
-    this.saveChange(updatedItems);
   }
 
   render() {
@@ -237,7 +260,7 @@ class DayTable extends React.Component {
               <th>Fat:{this.props.totalFat}</th>
               <th>Carbs:{this.props.totalCarbs}</th>
               <th>
-                <span class="badge bg-secondary">Shift+Del</span>
+                <span className="badge bg-secondary">Shift+Del</span>
               </th>
             </tr>
 
@@ -518,6 +541,7 @@ class ConsumedFoodRow extends React.Component {
         <td className="name-cell">{this.props.name}</td>
         <td>
           <input
+            id={this.props.name}
             className="form-control"
             type="text"
             value={this.state.grams}

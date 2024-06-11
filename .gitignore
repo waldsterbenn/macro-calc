@@ -13,6 +13,7 @@
 
 # compiled
 out/
+public/user_data
 
 # misc
 .DS_Store
