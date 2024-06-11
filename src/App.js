@@ -4,9 +4,11 @@ import React from "react";
 const electron = window.require("electron");
 
 const consumedStorageKey = "storedConsumedItems";
-const isUlcStorageKey = "isUlc";
+const isUlcStorageKey = "isLowCarb";
 const saveDateStorageKey = "savedDate";
 const lastFocusKey = "focusedTextbox";
+const lcMacroGoalsStorageKey = "lcMacroGoals";
+const hcMacroGoalsStorageKey = "hcMacroGoals";
 
 /**
  * !!!!!!!!!!!!!!!!!!
@@ -215,19 +217,74 @@ class DayTable extends React.Component {
   constructor(props) {
     super(props);
 
-    let iul = JSON.parse(localStorage.getItem(isUlcStorageKey));
-    this.state = {
-      isUlc: iul,
-    };
+    this.state = this.parseStoredSettings();
     this.handleIsUlcChange = this.handleIsUlcChange.bind(this);
+    this.handleMacrosChange = this.handleMacrosChange.bind(this);
+  }
+
+  parseStoredSettings() {
+    let iul = localStorage.getItem(isUlcStorageKey);
+    if (iul === null) {
+      localStorage.setItem(isUlcStorageKey, false);
+      iul = false;
+    }
+
+    iul = JSON.parse(iul);
+
+    let macros = JSON.parse(
+      localStorage.getItem(
+        iul ? lcMacroGoalsStorageKey : hcMacroGoalsStorageKey
+      )
+    );
+
+    if (!macros) {
+      macros = iul
+        ? { carb: 30, fat: 154, protein: 150 }
+        : { carb: 262, fat: 125, protein: 225 };
+      localStorage.setItem(
+        iul ? lcMacroGoalsStorageKey : hcMacroGoalsStorageKey,
+        JSON.stringify(macros)
+      );
+    }
+    return { isUlc: iul, macros: macros };
   }
 
   handleIsUlcChange(newVal) {
     let checked = newVal.target.checked;
+    localStorage.setItem(isUlcStorageKey, checked);
+
+    let newState = this.parseStoredSettings();
+    this.setState(newState);
+  }
+
+  //TODO: also update targets when these change
+  handleMacrosChange(e) {
+    let newMacros;
+    if (e.target.id === "proteinGoalText") {
+      newMacros = {
+        ...this.state.macros,
+        ...{ protein: parseInt(e.target.value) },
+      };
+    } else if (e.target.id === "fatGoalText") {
+      newMacros = {
+        ...this.state.macros,
+        ...{ fat: parseInt(e.target.value) },
+      };
+    } else if (e.target.id === "carbGoalText") {
+      newMacros = {
+        ...this.state.macros,
+        ...{ carb: parseInt(e.target.value) },
+      };
+    }
+
+    localStorage.setItem(
+      this.state.isUlc ? lcMacroGoalsStorageKey : hcMacroGoalsStorageKey,
+      JSON.stringify({ macros: newMacros })
+    );
+
     this.setState({
-      isUlc: checked,
+      macros: newMacros,
     });
-    localStorage.setItem(isUlcStorageKey, JSON.stringify({ isUlc: checked }));
   }
 
   render() {
@@ -236,16 +293,56 @@ class DayTable extends React.Component {
         <div data-tid="container" className="app-table">
           <table className="table table-striped table-hover">
             <tr className="bg-info text-light">
-              <th>Goal</th>
+              <th></th>
+              <th></th>
+              <th>Protein</th>
+              <th>Fat</th>
+              <th>Carbohydrate</th>
+              <th></th>
+            </tr>
+            <tr className="bg-info text-light">
+              <th>Goals</th>
               <th>
+                Low carb{" "}
                 <input
                   className="form-checkbox"
                   type="checkbox"
                   checked={this.state.isUlc}
                   onChange={this.handleIsUlcChange}
-                />{" "}
-                ULC
+                />
               </th>
+              <th>
+                <input
+                  id="proteinGoalText"
+                  className="text"
+                  type="number"
+                  value={this.state.macros.protein}
+                  onChange={this.handleMacrosChange}
+                />
+              </th>
+              <th>
+                <input
+                  id="fatGoalText"
+                  className="text"
+                  type="number"
+                  value={this.state.macros.fat}
+                  onChange={this.handleMacrosChange}
+                />
+              </th>
+              <th>
+                <input
+                  id="carbGoalText"
+                  className="text"
+                  type="number"
+                  value={this.state.macros.carb}
+                  onChange={this.handleMacrosChange}
+                />
+              </th>
+              <th></th>
+            </tr>
+            <tr className="bg-primary text-light">
+              <th>Targets</th>
+              <th></th>
               <th>
                 {this.props.totalProtein - (this.state.isUlc ? 150 : 225)}
               </th>
@@ -394,7 +491,7 @@ class SearchBar extends React.Component {
             this.inputField = input;
           }} // assign a ref to the input field
         />
-        <span class="badge bg-secondary text-white">Ctrl+F</span>
+        <span className="badge bg-secondary text-white">Ctrl+F</span>
         <input
           type="checkbox"
           className="search-bar-elements"
